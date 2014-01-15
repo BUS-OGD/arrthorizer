@@ -1,5 +1,3 @@
-require 'arrthorizer/context_role'
-
 class UnnamespacedContextRole < Arrthorizer::ContextRole
 end
 

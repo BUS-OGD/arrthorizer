@@ -3,7 +3,7 @@ require 'spec_helper'
 describe SomeController do
   describe :some_action do
     let!(:privilege) { create_privilege_for(SomeController, :some_action) }
-    let!(:current_user) { mock("user") }
+    let!(:current_user) { double("user") }
 
     before do
       controller.stub(:current_user) { current_user }
@@ -14,7 +14,7 @@ describe SomeController do
 
       context "when the role is linked to the privilege" do
         before do
-          add_role_to_privilege( generic_role, privilege )
+          Arrthorizer::Permission.grant(privilege, to: generic_role)
         end
 
         context "when I am a member of the required generic role" do
@@ -41,7 +41,7 @@ describe SomeController do
       context "when I am only a member of an unrelated generic role" do
         before do
           other_privilege = create_privilege_for(SomeController, :something)
-          add_role_to_privilege(generic_role, other_privilege)
+          Arrthorizer::Permission.grant(other_privilege, to: generic_role)
           add_user_to_generic_role(current_user, generic_role)
         end
 
@@ -53,10 +53,10 @@ describe SomeController do
 
     describe "context roles" do
       let!(:context_role) do
-        create_context_role(:role) do |context|
+        configure_context_role do |user, context|
           # This can be any type of check, e.g.:
           #   blog = Blog.find(context[:id])
-          #   blog.author == context[:current_user]
+          #   blog.author == user
 
           # For the purpose of this test, just do a simple check:
           # is the param :some_param equal to true.
@@ -66,24 +66,24 @@ describe SomeController do
 
       context "when the role is linked to the privilege" do
         before do
-          add_role_to_privilege( context_role, privilege )
+          Arrthorizer::Permission.grant(privilege, to: context_role)
         end
 
         context "when I supply the correct 'some_param' param" do
-          let(:allow) { true }
+          let(:allow_request) { true }
 
           it "succeeds" do
-            get :some_action, params: { some_param: allow }
+            get :some_action, some_param: allow_request
 
             response.should be_success
           end
         end
 
         context "when I do not supply the correct 'some_param' param" do
-          let(:allow) { "something else" }
+          let(:allow_request) { "something else" }
 
           it "succeeds" do
-            get :some_action, params: { some_param: allow }
+            get :some_action, some_param: allow_request
 
             response.should be_forbidden
           end
@@ -93,14 +93,14 @@ describe SomeController do
       context "when the role is linked to a different privilege" do
         before do
           other_privilege = create_privilege_for(SomeController, :something)
-          add_role_to_privilege( context_role, other_privilege )
+          Arrthorizer::Permission.grant(other_privilege, to: context_role)
         end
 
         context "when I supply the correct 'some_param' param" do
-          let(:allow) { true }
+          let(:allow_request) { true }
 
           it "still fails" do
-            get :some_action, params: { some_param: allow }
+            get :some_action, some_param: allow_request
 
             response.should be_forbidden
           end
@@ -111,19 +111,17 @@ describe SomeController do
 
   private
   def create_privilege_for(controller, action)
-    # stub
+    Arrthorizer::PrivilegeSet.new("placeholder")
   end
 
   def create_generic_role
-    # stub
+    Arrthorizer::GenericRole.new("generic role")
   end
 
-  def create_context_role(name, &block)
-    # stub
-  end
-  def add_role_to_privilege( role, privilege )
-    #PermissionFactory.allow(role).to_use(privilege)
-    #                        ^-- :blog_post_owner o.i.d.
+  def configure_context_role(&block)
+    UnnamespacedContextRole.instance.tap do |role|
+      role.stub(:applies_to_user?, &block)
+    end
   end
 
   def add_user_to_generic_role( user, generic_role )
