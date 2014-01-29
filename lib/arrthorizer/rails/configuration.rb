@@ -3,6 +3,9 @@ module Arrthorizer
     class Configuration
       FileNotFound = Class.new(Arrthorizer::ArrthorizerException)
 
+      mattr_accessor :config_file
+      self.config_file = "config/arrthorizer.yml"
+
       def self.load
         Parser.new.process(config)
       end
@@ -15,15 +18,11 @@ module Arrthorizer
       def self.config_file_contents
         File.read(config_file_location)
       rescue Errno::ENOENT
-        raise FileNotFound, "Arrthorizer requires a config file at #{config_file_name}"
+        raise FileNotFound, "Arrthorizer requires a config file at #{config_file}"
       end
 
       def self.config_file_location
-        ::Rails.root.join config_file_name
-      end
-
-      def self.config_file_name
-        "config/arrthorizer.yml"
+        ::Rails.root.join config_file
       end
 
       class Parser
