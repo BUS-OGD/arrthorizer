@@ -7,6 +7,8 @@ class SomeController < ApplicationController
     end
   end
 
+  before_filter :authorize
+
   def some_action
   end
 
