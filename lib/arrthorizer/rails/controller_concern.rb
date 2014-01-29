@@ -37,6 +37,23 @@ module Arrthorizer
 
       module ClassMethods
         ##
+        # This method sets up Arrthorizer to verify that a user has the proper
+        # rights to access a # given controller action. Options can be provided
+        # and are passed to before_filter.
+        def requires_authorization(options = {})
+          before_filter :authorize, options
+        end
+
+        ##
+        # This method sets up Arrthorizer to not verify requests to all (when
+        # no options are provided) or selected (when :only or :except are
+        # provided) actions in this controller and its subclasses.
+        # Options can be provided and are passed to skip_filter.
+        def does_not_require_authorization(options = {})
+          skip_filter :authorize, options
+        end
+
+        ##
         # This is the configuration method for building Arrthorizer contexts from HTTP requests.
         # The developer specifies how contexts for authorization checks should be built
         # by providing a block to this method. For more information, check the documentation
