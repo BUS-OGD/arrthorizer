@@ -19,6 +19,15 @@ module Arrthorizer
           arrthorizer_configuration.builder_for(self).build_for_action(nil)
         end
 
+        def authorize
+          action = Arrthorizer::Rails::ControllerAction.get_current(self)
+          roles = action.privilege.permitted_roles
+
+          roles.any? do |role|
+            role.applies_to_user?(current_user, arrthorizer_context)
+          end || forbidden
+        end
+
         def forbidden
           render text: 'Access Denied', status: :forbidden
         end
