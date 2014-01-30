@@ -22,13 +22,17 @@ module Arrthorizer
 
     protected
       def build_from_block(&config)
-        context_hash = controller.instance_eval(&config)
+        if block_given?
+          context_hash = controller.instance_eval(&config)
 
-        build_from_hash(context_hash)
+          build_from_hash(context_hash)
+        else
+          build_from_hash({})
+        end
       end
 
       def config_for_action(action)
-        configuration.block_for(action)
+        configuration.try(:block_for, action)
       end
     end
   end
