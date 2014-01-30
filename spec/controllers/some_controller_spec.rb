@@ -1,8 +1,8 @@
 require 'spec_helper'
 
 describe SomeController do
-  let(:action) { Arrthorizer::Rails::ControllerAction.fetch_by_name("some#some_action") }
-  let(:other_action) { Arrthorizer::Rails::ControllerAction.fetch_by_name("some#other_action") }
+  let(:action) { Arrthorizer::Rails::ControllerAction.fetch("some#some_action") }
+  let(:other_action) { Arrthorizer::Rails::ControllerAction.fetch("some#other_action") }
 
   describe :some_action do
     let!(:privilege) { action.privilege }

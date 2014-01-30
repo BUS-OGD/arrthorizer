@@ -8,7 +8,7 @@ module Arrthorizer
       attr_reader :controller_name, :action_name
 
       def self.get_current(controller)
-        fetch_by_name(name_for(controller))
+        fetch(name_for(controller))
       end
 
       def initialize(attrs)
@@ -29,8 +29,8 @@ module Arrthorizer
         "#{controller.controller_name}##{controller.action_name}"
       end
 
-      def self.fetch_by_name(name)
-        registry.fetch(name)
+      def self.fetch(key)
+        registry.fetch(key)
       end
 
       def self.register(controller_action)
