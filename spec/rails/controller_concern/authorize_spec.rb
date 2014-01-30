@@ -22,7 +22,7 @@ describe Arrthorizer::Rails::ControllerConcern do
       it "is forbidden" do
         expect(controller).to receive(:forbidden)
 
-        controller.authorize
+        controller.send(:authorize)
       end
     end
 
@@ -39,7 +39,7 @@ describe Arrthorizer::Rails::ControllerConcern do
         it "is forbidden" do
           expect(controller).to receive(:forbidden)
 
-          controller.authorize
+          controller.send(:authorize)
         end
       end
 
@@ -59,7 +59,7 @@ describe Arrthorizer::Rails::ControllerConcern do
           it "is not forbidden" do
             expect(controller).not_to receive(:forbidden)
 
-            controller.authorize
+            controller.send(:authorize)
           end
         end
 
@@ -71,7 +71,7 @@ describe Arrthorizer::Rails::ControllerConcern do
           it "is forbidden" do
             expect(controller).to receive(:forbidden)
 
-            controller.authorize
+            controller.send(:authorize)
           end
 
           context "when the privilege has another permitted role" do
@@ -90,7 +90,7 @@ describe Arrthorizer::Rails::ControllerConcern do
               it "is not forbidden" do
                 expect(controller).not_to receive(:forbidden)
 
-                controller.authorize
+                controller.send(:authorize)
               end
             end
 
@@ -102,7 +102,7 @@ describe Arrthorizer::Rails::ControllerConcern do
               it "is forbidden" do
                 expect(controller).to receive(:forbidden)
 
-                controller.authorize
+                controller.send(:authorize)
               end
             end
           end

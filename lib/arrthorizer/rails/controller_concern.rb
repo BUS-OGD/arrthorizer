@@ -32,7 +32,7 @@ module Arrthorizer
           render text: 'Access Denied', status: :forbidden
         end
 
-        protected :arrthorizer_context, :arrthorizer_configuration, :arrthorizer_defaults
+        protected :arrthorizer_context, :arrthorizer_configuration, :arrthorizer_defaults, :authorize, :forbidden
       end
 
       module ClassMethods
