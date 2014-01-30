@@ -1,19 +1,34 @@
 module Arrthorizer
   module Rails
     class ControllerContextBuilder < Arrthorizer::ContextBuilder
-      attr_accessor :action_configs, :defaults_config, :controller
+      attr_accessor :controller, :configuration
 
-      def initialize(config)
-        self.action_configs = config[:action_configs]
-        self.defaults_config = config[:default]
-        self.controller = config[:controller]
+      def initialize(controller, configuration)
+        self.controller = controller
+        self.configuration = configuration
       end
 
-      def build_for_action(current_action)
-        config = action_configs.fetch(current_action) { defaults_config }
+      def build_default
+        config = config_for_action(nil)
+
+        build_from_block(&config)
+      end
+
+      def build_for_action
+        config = config_for_action(controller.action_name)
+
+        build_from_block(&config)
+      end
+
+    protected
+      def build_from_block(&config)
         context_hash = controller.instance_eval(&config)
 
         build_from_hash(context_hash)
+      end
+
+      def config_for_action(action)
+        configuration.block_for(action)
       end
     end
   end

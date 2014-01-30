@@ -4,6 +4,7 @@ module Arrthorizer
       extend ActiveSupport::Concern
 
       included do
+      protected
         class_attribute :arrthorizer_configuration, instance_writer: false
 
         ##
@@ -12,11 +13,11 @@ module Arrthorizer
         # built and provided to all ContextRoles that are configured as having
         # access to the given controller action.
         def arrthorizer_context
-          arrthorizer_configuration.builder_for(self).build_for_action(action_name)
+          arrthorizer_context_builder.build_for_action
         end
 
         def arrthorizer_defaults
-          arrthorizer_configuration.builder_for(self).build_for_action(nil)
+          arrthorizer_context_builder.build_default
         end
 
         def authorize
@@ -32,7 +33,9 @@ module Arrthorizer
           render text: 'Access Denied', status: :forbidden
         end
 
-        protected :arrthorizer_context, :arrthorizer_configuration, :arrthorizer_defaults, :authorize, :forbidden
+        def arrthorizer_context_builder
+          @context_builder ||= Arrthorizer::Rails::ControllerContextBuilder.new(self, arrthorizer_configuration)
+        end
       end
 
       module ClassMethods

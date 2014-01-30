@@ -17,8 +17,8 @@ module Arrthorizer
         add_action_block(action, &block)
       end
 
-      def builder_for(controller)
-        Arrthorizer::Rails::ControllerContextBuilder.new(controller: controller, default: defaults_block, action_configs: action_blocks)
+      def block_for(action)
+        action_blocks.fetch(action) { defaults_block }
       end
 
     private
