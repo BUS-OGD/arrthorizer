@@ -5,28 +5,28 @@ module Arrthorizer
       ActionNotDefined = Class.new(Arrthorizer::ArrthorizerException)
 
       attr_accessor :privilege
-      attr_reader :controller_name, :action_name
+      attr_reader :controller_path, :action_name
 
       def self.get_current(controller)
-        fetch(name_for(controller))
+        fetch(key_for(controller))
       end
 
       def initialize(attrs)
-        self.controller_name = attrs.fetch(:controller) { raise ControllerNotDefined }
+        self.controller_path = attrs.fetch(:controller) { raise ControllerNotDefined }
         self.action_name = attrs.fetch(:action) { raise ActionNotDefined }
 
         self.class.register(self)
       end
 
       def to_key
-        self.class.name_for(self)
+        "#{controller_path}##{action_name}"
       end
 
     private
-      attr_writer :controller_name, :action_name
+      attr_writer :controller_path, :action_name
 
-      def self.name_for(controller)
-        "#{controller.controller_name}##{controller.action_name}"
+      def self.key_for(controller)
+        "#{controller.controller_path}##{controller.action_name}"
       end
 
       def self.fetch(key)

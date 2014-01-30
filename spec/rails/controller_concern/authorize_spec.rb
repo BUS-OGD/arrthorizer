@@ -3,10 +3,10 @@ require 'spec_helper'
 describe Arrthorizer::Rails::ControllerConcern do
   let(:controller_class) { Class.new(SomeController) }
   let(:controller) { controller_class.new }
-  let(:controller_action){ Arrthorizer::Rails::ControllerAction.new(controller: controller_name, action: action_name)}
+  let(:controller_action){ Arrthorizer::Rails::ControllerAction.new(controller: controller_path, action: action_name)}
 
   let(:action_name){ "some_action" }
-  let(:controller_name){ "some" }
+  let(:controller_path){ "some" }
   let(:current_user){ double("user") }
   let(:context){ double("context") }
 
@@ -14,7 +14,7 @@ describe Arrthorizer::Rails::ControllerConcern do
     controller.stub(:action_name).and_return(action_name)
     controller.stub(:current_user).and_return(current_user)
     controller.stub(:arrthorizer_context).and_return(context)
-    controller.stub(:controller_name).and_return(controller_name)
+    controller.stub(:controller_path).and_return(controller_path)
   end
 
   describe :authorize do
