@@ -16,3 +16,6 @@ test/tmp
 test/version_tmp
 tmp
 spec/internal/db/*.sqlite3
+
+.ruby-version
+.ruby-gemset

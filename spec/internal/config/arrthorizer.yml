@@ -1,0 +1,9 @@
+---
+get_some_action:
+  actions:
+    - some:
+      - some_action
+get_other_action:
+  actions:
+    - some:
+      - other_action

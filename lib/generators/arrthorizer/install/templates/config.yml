@@ -1,0 +1,52 @@
+---
+# This file contains the configuration for Arrthorizer. It defines privileges and links them to
+# both Controller Actions and the Roles that are allowed to use them.
+#
+# Say we're writing a forum, and we have a Forum::TopicsController with the default REST actions.
+# We might want to split these REST actions into Create, Read, Update and Delete privileges
+# (Let's call them 'create_forum_topic', 'read_forum_topic', 'update_forum_topic' and
+# 'delete_forum_topic'. None of these names are magically generated - *you* get to choose the
+# names).
+#
+# Let's also assume that we have Roles for Forum::TopicStarter and Forum::Administrators.
+# ForumTopicStarters may be allowed to delete any topics they started and update them in
+# whatever way they deem relevant, but not change any topics they did not start themselves. This
+# means the role would be a ContextRole. The administrators can do anything they bloody well
+# please with any topic at all (therefore, the role would be a GenericRole). Let's also assume
+# you have a LoggedInUser role which allows anyone to see any topic or start a new one, as
+# long as they're logged in.
+#
+# We would define these privileges as follows:
+#
+# read_forum_topic:
+#   actions:
+#     - forum/topics:
+#       - show
+#       - index
+#   roles:
+#     - LoggedInUser
+#
+# create_forum_topic:
+#   actions:
+#     - forum/topics:
+#       - new
+#       - create
+#   roles:
+#     - LoggedInUser
+#
+# delete_forum_topic:
+#   actions:
+#     - forum/topics:
+#       - destroy
+#   roles:
+#     - Forum::TopicStarter
+#     - Forum::Administrators
+#
+# update_forum_topic:
+#   actions:
+#     - forum/topics:
+#       - edit
+#       - update
+#   roles:
+#     - Forum::TopicStarter
+#     - Forum::Administrators

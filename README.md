@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/ReneB/arrthorizer.png?branch=fyfbd_118)](https://travis-ci.org/ReneB/arrthorizer)
+(The build is currently supposed to fail, since the gem is not in a releasable state yet)
+
 # Arrthorizer
 
 TODO: Write a gem description

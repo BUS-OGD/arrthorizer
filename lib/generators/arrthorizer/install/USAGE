@@ -1,0 +1,9 @@
+Description:
+    Generates all the files that are needed to use Arrthorizer in your application.
+
+Usage:
+    rails generate arrthorizer:install
+
+    This will create:
+        config/arrthorizer.yml
+        app/roles/.gitkeep
