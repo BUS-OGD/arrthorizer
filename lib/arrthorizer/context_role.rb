@@ -10,7 +10,11 @@ module Arrthorizer
     include Singleton
 
     def to_key
-      self.class.name.underscore
+      self.class.to_key
+    end
+
+    def self.to_key
+      name
     end
 
     def self.applies_to_user?(*args)
