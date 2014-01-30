@@ -5,7 +5,7 @@ describe Arrthorizer::Role do
     let(:context_role) { class TestRole < Arrthorizer::ContextRole; end; TestRole.instance }
 
     specify "that role is stored" do
-      Arrthorizer::Role.get(context_role.name).should be context_role
+      Arrthorizer::Role.get(context_role.to_key).should be context_role
     end
 
     after :each do

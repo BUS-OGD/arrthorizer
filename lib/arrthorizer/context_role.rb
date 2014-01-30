@@ -9,7 +9,7 @@ module Arrthorizer
   class ContextRole < Role
     include Singleton
 
-    def name
+    def to_key
       self.class.name.underscore
     end
 

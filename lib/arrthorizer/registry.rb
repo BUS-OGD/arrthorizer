@@ -12,8 +12,8 @@ module Arrthorizer
       self.storage = Hash.new
     end
 
-    def add(privilege)
-      storage[privilege.name] = privilege
+    def add(object)
+      storage[object.to_key] = object
     end
 
     def fetch(key, &block)

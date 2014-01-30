@@ -13,9 +13,9 @@ describe Arrthorizer::Role do
         end
       end
 
-      context "when the name of a ContextRole instance is provided" do
+      context "when a String representing a ContextRole instance is provided" do
         it_behaves_like "finding the right Role" do
-          let(:arg) { expected_role.name }
+          let(:arg) { expected_role.to_key }
         end
       end
 
@@ -35,9 +35,9 @@ describe Arrthorizer::Role do
         end
       end
 
-      context "when the name of a GenericRole is provided" do
+      context "when a String representing a GenericRole is provided" do
         it_behaves_like "finding the right Role" do
-          let(:arg) { expected_role.name }
+          let(:arg) { expected_role.to_key }
         end
       end
     end
