@@ -15,6 +15,10 @@ module Arrthorizer
   module_function
     def initialize!
       ActionController::Base.send(:include, ControllerConcern)
+
+      if defined?(ActionController::API)
+        ActionController::API.send(:include, ControllerConcern)
+      end
     end
   end
 end
