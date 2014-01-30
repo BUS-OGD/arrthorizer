@@ -11,6 +11,10 @@ module Arrthorizer
         fetch_by_name(name_for(controller))
       end
 
+      def self.to_key
+        name_for(self)
+      end
+
       def initialize(attrs)
         self.controller_name = attrs.fetch(:controller) { raise ControllerNotDefined }
         self.action_name = attrs.fetch(:action) { raise ActionNotDefined }
@@ -20,6 +24,10 @@ module Arrthorizer
 
       def name
         self.class.name_for(self)
+      end
+
+      def to_key
+        self.class.to_key
       end
 
     private

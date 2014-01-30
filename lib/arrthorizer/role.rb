@@ -22,6 +22,10 @@ module Arrthorizer
     def self.registry
       @registry ||= Registry.new
     end
+
+    def to_key
+      name
+    end
   end
 end
 

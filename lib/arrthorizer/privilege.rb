@@ -28,6 +28,10 @@ module Arrthorizer
       @permitted_roles ||= Registry.new
     end
 
+    def to_key
+      name
+    end
+
     protected
     def self.register(privilege)
       registry.add(privilege)

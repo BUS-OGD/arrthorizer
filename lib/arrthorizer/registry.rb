@@ -19,7 +19,7 @@ module Arrthorizer
     def fetch(key, &block)
       block ||= proc { raise NotFound, "Could not find value for #{key.inspect}" }
 
-      formatted_key = key.respond_to?(:name) ? key.name : key
+      formatted_key = key.respond_to?(:to_key) ? key.to_key : key
 
       storage.fetch(formatted_key, &block)
     end
