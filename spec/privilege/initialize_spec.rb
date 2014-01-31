@@ -2,7 +2,7 @@ require "spec_helper"
 
 describe Arrthorizer::Privilege do
   describe :initialize do
-    let(:role) { SomeGenericRole }
+    let(:role) { UnnamespacedContextRole }
     let(:roles) { [ role ] }
     let(:name) { "some name" }
 

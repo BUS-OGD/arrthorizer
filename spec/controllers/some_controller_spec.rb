@@ -12,50 +12,6 @@ describe SomeController do
       controller.stub(:current_user) { current_user }
     end
 
-    describe "generic roles" do
-      let!(:generic_role) { create_generic_role }
-
-      context "when the role is linked to the privilege" do
-        before do
-          Arrthorizer::Permission.grant(privilege, to: generic_role)
-        end
-
-        context "when I am a member of the required generic role" do
-          before do
-            add_user_to_generic_role(current_user, generic_role)
-          end
-
-          it "succeeds" do
-            get :some_action
-
-            response.should be_success
-          end
-        end
-
-        context "when I am not a member of the required generic role" do
-          it "fails" do
-            get :some_action
-
-            response.should be_forbidden
-          end
-        end
-      end
-
-      context "when I am only a member of an unrelated generic role" do
-        before do
-          other_privilege = other_action.privilege
-          Arrthorizer::Permission.grant(other_privilege, to: generic_role)
-          add_user_to_generic_role(current_user, generic_role)
-        end
-
-        it "fails" do
-          get :some_action
-
-          response.should be_forbidden
-        end
-      end
-    end
-
     describe "context roles" do
       let!(:context_role) do
         configure_context_role do |user, context|
@@ -115,17 +71,9 @@ describe SomeController do
   end
 
   private
-  def create_generic_role
-    Arrthorizer::GenericRole.new("generic role")
-  end
-
   def configure_context_role(&block)
     UnnamespacedContextRole.instance.tap do |role|
       role.stub(:applies_to_user?, &block)
     end
-  end
-
-  def add_user_to_generic_role( user, generic_role )
-    # stub
   end
 end

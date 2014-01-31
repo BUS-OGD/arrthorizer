@@ -7,7 +7,6 @@ module Arrthorizer
 
   autoload :Role,                     "arrthorizer/role"
   autoload :ContextRole,              "arrthorizer/context_role"
-  autoload :GenericRole,              "arrthorizer/generic_role"
 
   autoload :Permission,               "arrthorizer/permission"
   autoload :Privilege,                "arrthorizer/privilege"
