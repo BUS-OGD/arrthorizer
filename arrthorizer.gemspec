@@ -6,11 +6,11 @@ require 'arrthorizer/version'
 Gem::Specification.new do |gem|
   gem.name          = "arrthorizer"
   gem.version       = Arrthorizer::VERSION
-  gem.authors       = ["René van den Berg"]
-  gem.email         = ["r.van.den.berg@ogd.nl"]
-  gem.description   = %q{TODO: Write a gem description}
-  gem.summary       = %q{TODO: Write a gem summary}
-  gem.homepage      = ""
+  gem.authors       = ["René van den Berg", "Lennaert Meijvogel"]
+  gem.email         = ["rene.vandenberg@ogd.nl", "lennaert.meijvogel@ogd.nl"]
+  gem.description   = %q{Contextual authorization for your Rails (3+) application}
+  gem.summary       = %q{Contextual authorization for your Rails (3+) application}
+  gem.homepage      = "https://github.com/BUS-ogd/arrthorizer"
 
   gem.files         = `git ls-files`.split($/)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
