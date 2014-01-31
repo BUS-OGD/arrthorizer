@@ -19,8 +19,10 @@ describe Arrthorizer::Rails do
     describe "each controller" do
       let(:controller) { controller_class.new }
 
-      it "responds to :arrthorizer_context" do
-        controller.should respond_to :arrthorizer_context
+      it "has a protected method called :arrthorizer_context" do
+        # this method is protected to prevent exposing it
+        # via default or wildcard routes
+        controller.protected_methods.should include :arrthorizer_context
       end
 
       context "when it has a proper configuration for context building" do
