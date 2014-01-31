@@ -1,5 +1,5 @@
-[![Build Status](https://travis-ci.org/ReneB/arrthorizer.png?branch=fyfbd_118)](https://travis-ci.org/ReneB/arrthorizer)
-(The build is currently supposed to fail, since the gem is not in a releasable state yet)
+[![Build Status](https://travis-ci.org/ReneB/arrthorizer.png?branch=releases/0.1)](https://travis-ci.org/ReneB/arrthorizer)
+(The build status represents the current release branch)
 
 # Arrthorizer
 
