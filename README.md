@@ -1,5 +1,5 @@
 [![Code Climate](https://codeclimate.com/github/BUS-OGD/arrthorizer.png)](https://codeclimate.com/github/BUS-OGD/arrthorizer)
-[![Build Status](https://travis-ci.org/ReneB/arrthorizer.png?branch=releases/0.1)](https://travis-ci.org/ReneB/arrthorizer)
+[![Build Status](https://travis-ci.org/BUS-OGD/arrthorizer.png?branch=releases/0.1)](https://travis-ci.org/BUS-OGD/arrthorizer)
 (The build status represents the current release branch)
 
 # Arrthorizer
