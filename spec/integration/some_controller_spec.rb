@@ -4,7 +4,7 @@ describe SomeController do
   let(:action) { Arrthorizer::Rails::ControllerAction.fetch("some#some_action") }
   let(:other_action) { Arrthorizer::Rails::ControllerAction.fetch("some#other_action") }
 
-  describe :some_action do
+  describe :some_action, type: :controller do
     let!(:privilege) { action.privilege }
     let!(:current_user) { double("user") }
 
