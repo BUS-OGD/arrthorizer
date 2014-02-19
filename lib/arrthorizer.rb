@@ -7,7 +7,7 @@ module Arrthorizer
 
   autoload :Role,                     "arrthorizer/role"
   autoload :ContextRole,              "arrthorizer/context_role"
-  autoload :GenericRole,              "arrthorizer/generic_role"
+  autoload :Group,                    "arrthorizer/group"
 
   autoload :Permission,               "arrthorizer/permission"
   autoload :Privilege,                "arrthorizer/privilege"
@@ -28,12 +28,12 @@ module Arrthorizer
   end
 
   ##
-  # Inject a dependency for Arrthorizer's GenericRole feature.
+  # Inject a dependency for Arrthorizer's Groups feature.
   # The provided object needs to be able to respond_to :is_member_of?
   # The is_member_of? function is expected to return a boolean-like
   # object which represents whether or not the user is a member of the
-  # provided GenericRole
-  def self.check_generic_roles_using(object)
+  # provided Group
+  def self.check_group_membership_using(object)
     if object.respond_to?(:is_member_of?)
       @membership_service = object
     else

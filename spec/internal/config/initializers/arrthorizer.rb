@@ -5,5 +5,5 @@ class EmptyMembershipService
 end
 
 Arrthorizer.configure do
-  check_generic_roles_using EmptyMembershipService.new
+  check_group_membership_using EmptyMembershipService.new
 end

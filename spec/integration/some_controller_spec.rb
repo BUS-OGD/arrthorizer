@@ -12,17 +12,17 @@ describe SomeController do
       controller.stub(:current_user) { current_user }
     end
 
-    describe "generic roles" do
-      let!(:generic_role) { create_generic_role }
+    describe "group roles" do
+      let!(:group) { Arrthorizer::Group.new("some group") }
 
       context "when the role is linked to the privilege" do
         before do
-          Arrthorizer::Permission.grant(privilege, to: generic_role)
+          Arrthorizer::Permission.grant(privilege, to: group)
         end
 
-        context "when I am a member of the required generic role" do
+        context "when I am a member of the required group" do
           before do
-            add_user_to_generic_role(current_user, generic_role)
+            add_user_to_group(current_user, group)
           end
 
           it "succeeds" do
@@ -32,9 +32,9 @@ describe SomeController do
           end
         end
 
-        context "when I am not a member of the required generic role" do
+        context "when I am not a member of the required group" do
           before do
-            remove_user_from_generic_role(current_user, generic_role)
+            remove_user_from_group(current_user, group)
           end
 
           it "fails" do
@@ -43,19 +43,22 @@ describe SomeController do
             response.should be_forbidden
           end
         end
-      end
 
-      context "when I am only a member of an unrelated generic role" do
-        before do
-          other_privilege = other_action.privilege
-          Arrthorizer::Permission.grant(other_privilege, to: generic_role)
-          add_user_to_generic_role(current_user, generic_role)
-        end
+        context "when I am only a member of an unrelated group" do
+          let(:other_group) { Arrthorizer::Group.new("other group") }
 
-        it "fails" do
-          get :some_action
+          before do
+            other_privilege = other_action.privilege
+            Arrthorizer::Permission.grant(other_privilege, to: other_group)
+            remove_user_from_group(current_user, group)
+            add_user_to_group(current_user, other_group)
+          end
 
-          response.should be_forbidden
+          it "fails" do
+            get :some_action
+
+            response.should be_forbidden
+          end
         end
       end
     end
@@ -119,29 +122,25 @@ describe SomeController do
   end
 
   private
-  def create_generic_role
-    Arrthorizer::GenericRole.new("generic role")
-  end
-
   def configure_context_role(&block)
     UnnamespacedContextRole.instance.tap do |role|
       role.stub(:applies_to_user?, &block)
     end
   end
 
-  def add_user_to_generic_role( user, generic_role )
-    stub_membership_with(user, generic_role) do
+  def add_user_to_group( user, group )
+    stub_membership_with(user, group) do
       true
     end
   end
 
-  def remove_user_from_generic_role( user, generic_role )
-    stub_membership_with(user, generic_role) do
+  def remove_user_from_group( user, group )
+    stub_membership_with(user, group) do
       false
     end
   end
 
-  def stub_membership_with(user, generic_role, &block)
-    Arrthorizer.membership_service.stub(:is_member_of?).with(user, generic_role, &block)
+  def stub_membership_with(user, group, &block)
+    Arrthorizer.membership_service.stub(:is_member_of?).with(user, group, &block)
   end
 end

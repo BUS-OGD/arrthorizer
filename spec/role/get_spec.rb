@@ -26,16 +26,16 @@ describe Arrthorizer::Role do
       end
     end
 
-    context "fetching GenericRoles" do
-      let(:expected_role) { SomeGenericRole } # provided by the internal Rails app
+    context "fetching Groups" do
+      let(:expected_role) { SomeGroup } # provided by the internal Rails app
 
-      context "when a GenericRole is provided" do
+      context "when a Group is provided" do
         it_behaves_like "finding the right Role" do
           let(:arg) { expected_role }
         end
       end
 
-      context "when a String representing a GenericRole is provided" do
+      context "when a String representing a Group is provided" do
         it_behaves_like "finding the right Role" do
           let(:arg) { expected_role.to_key }
         end
