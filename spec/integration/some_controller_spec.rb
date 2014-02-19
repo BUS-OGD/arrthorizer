@@ -33,6 +33,10 @@ describe SomeController do
         end
 
         context "when I am not a member of the required generic role" do
+          before do
+            remove_user_from_generic_role(current_user, generic_role)
+          end
+
           it "fails" do
             get :some_action
 
@@ -126,6 +130,18 @@ describe SomeController do
   end
 
   def add_user_to_generic_role( user, generic_role )
-    # stub
+    stub_membership_with(user, generic_role) do
+      true
+    end
+  end
+
+  def remove_user_from_generic_role( user, generic_role )
+    stub_membership_with(user, generic_role) do
+      false
+    end
+  end
+
+  def stub_membership_with(user, generic_role, &block)
+    Arrthorizer.membership_service.stub(:is_member_of?).with(user, generic_role, &block)
   end
 end

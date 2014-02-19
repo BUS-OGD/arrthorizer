@@ -14,7 +14,7 @@ module Arrthorizer
     end
 
     def applies_to_user?(user, context)
-      false
+      Arrthorizer.membership_service.is_member_of?(user, self)
     end
   end
 end
