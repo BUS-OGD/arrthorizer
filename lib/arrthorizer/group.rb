@@ -13,7 +13,12 @@ module Arrthorizer
       Role.register(self)
     end
 
-    def applies_to_user?(user, context)
+    def applies_to_user?(user, _)
+      is_member?(user)
+    end
+
+  private
+    def is_member?(user)
       Arrthorizer.membership_service.is_member_of?(user, self)
     end
   end
