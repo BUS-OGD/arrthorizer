@@ -25,5 +25,21 @@ describe Arrthorizer::Role do
         end
       end
     end
+
+    context "fetching Groups" do
+      let(:expected_role) { SomeGroup } # provided by the internal Rails app
+
+      context "when a Group is provided" do
+        it_behaves_like "finding the right Role" do
+          let(:arg) { expected_role }
+        end
+      end
+
+      context "when a String representing a Group is provided" do
+        it_behaves_like "finding the right Role" do
+          let(:arg) { expected_role.to_key }
+        end
+      end
+    end
   end
 end

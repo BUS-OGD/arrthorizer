@@ -11,9 +11,10 @@
 # Let's also assume that we have Roles for Forum::TopicStarter and Forum::Administrators.
 # ForumTopicStarters may be allowed to delete any topics they started and update them in
 # whatever way they deem relevant, but not change any topics they did not start themselves. This
-# means the role would be a ContextRole.
-# Let's also assume you have a LoggedInUser role which allows anyone to see any topic or start a
-# new one, as # long as they're logged in.
+# means the role would be a ContextRole. The administrators can do anything they bloody well
+# please with any topic at all (therefore, the role would be a Group). Let's also assume
+# you have a LoggedInUser role which allows anyone to see any topic or start a new one, as
+# long as they're logged in.
 #
 # We would define these privileges as follows:
 #

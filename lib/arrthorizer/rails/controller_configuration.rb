@@ -13,9 +13,12 @@ module Arrthorizer
         self.defaults_block = block
       end
 
-      def for_action(action, &block)
-        add_action_block(action, &block)
+      def for_action(*actions, &block)
+        actions.each do |action|
+          add_action_block(action, &block)
+        end
       end
+      alias_method :for_actions, :for_action
 
       def block_for(action)
         action_blocks.fetch(action) { defaults_block }
