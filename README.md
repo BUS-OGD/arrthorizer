@@ -1,5 +1,6 @@
 [![Code Climate](https://codeclimate.com/github/BUS-OGD/arrthorizer.png)](https://codeclimate.com/github/BUS-OGD/arrthorizer)
 [![Build Status](https://travis-ci.org/BUS-OGD/arrthorizer.png)](https://travis-ci.org/BUS-OGD/arrthorizer)
+[![Dependency Status](https://gemnasium.com/BUS-OGD/arrthorizer.png)](https://gemnasium.com/BUS-OGD/arrthorizer)
 [![Gem Version](http://badge.fury.io/rb/arrthorizer.png)](http://badge.fury.io/rb/arrthorizer)
 
 # Arrthorizer
