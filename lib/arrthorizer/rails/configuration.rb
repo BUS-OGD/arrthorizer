@@ -18,7 +18,13 @@ module Arrthorizer
       def self.config_file_contents
         File.read(config_file_location)
       rescue Errno::ENOENT
-        raise FileNotFound, "Arrthorizer requires a config file at #{config_file}"
+        message = "Arrthorizer requires a config file at #{config_file}"
+        if ::Rails.env.development?
+          puts "WARNING: #{message}"
+          return ""
+        else
+          raise FileNotFound, message
+        end
       end
 
       def self.config_file_location
