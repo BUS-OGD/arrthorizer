@@ -107,6 +107,44 @@ describe Arrthorizer::Rails::ControllerConcern do
             end
           end
         end
+
+        context "but evaluating the role raises any kind of StandardError" do
+          before do
+            role.stub(:applies_to_user?).with(current_user, context).and_raise("Some exception")
+          end
+
+          specify "a warning is logged" do
+            # for testing purposes. We're testing a filter here, so no request exists, causing #status= to fail
+            controller.stub(:forbidden)
+
+            expect(::Rails.logger).to receive(:warn).with(an_instance_of(String))
+
+            controller.send(:authorize)
+          end
+
+          context "but more roles are provided access" do
+            let(:another_role){ Arrthorizer::Group.new("some other role") }
+
+            before :each do
+              another_role.stub(:applies_to_user?).and_return(true)
+              permitted_roles.add(another_role)
+            end
+
+            specify "those roles are checked next" do
+              expect(another_role).to receive(:applies_to_user?)
+
+              controller.send(:authorize)
+            end
+          end
+
+          context "and no other roles are provided access" do
+            specify "a #forbidden handler is triggered" do
+              expect(controller).to receive(:forbidden)
+
+              controller.send(:authorize)
+            end
+          end
+        end
       end
     end
   end

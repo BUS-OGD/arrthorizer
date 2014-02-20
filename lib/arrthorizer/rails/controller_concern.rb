@@ -25,7 +25,13 @@ module Arrthorizer
           roles = action.privilege.permitted_roles
 
           roles.any? do |role|
-            role.applies_to_user?(current_user, arrthorizer_context)
+            begin
+              role.applies_to_user?(current_user, arrthorizer_context)
+            rescue StandardError => e
+              ::Rails.logger.warn("Error occurred while evaluating #{role} for #{current_user}.\nCurrent context: #{arrthorizer_context.inspect}")
+
+              false
+            end
           end || forbidden
         end
 
