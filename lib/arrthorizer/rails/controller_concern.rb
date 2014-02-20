@@ -27,7 +27,7 @@ module Arrthorizer
           roles.any? do |role|
             begin
               role.applies_to_user?(current_user, arrthorizer_context)
-            rescue StandardError => e
+            rescue StandardError
               ::Rails.logger.warn("Error occurred while evaluating #{role} for #{current_user}.\nCurrent context: #{arrthorizer_context.inspect}")
 
               false
