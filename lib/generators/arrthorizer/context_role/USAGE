@@ -1,0 +1,8 @@
+Description:
+    Generate a template for a new Arrthorizer::ContextRole
+
+Example:
+    rails generate context_role forum/post_author
+
+    This will create:
+        app/roles/forum/post_author.rb
