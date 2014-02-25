@@ -4,4 +4,6 @@ class Arrthorizer::ContextRoleGenerator < Rails::Generators::NamedBase
   def create_role
     template "role.rb", "app/roles/#{name}.rb"
   end
+
+  hook_for :test_framework
 end
