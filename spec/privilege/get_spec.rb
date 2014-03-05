@@ -18,7 +18,9 @@ describe Arrthorizer::Privilege do
       end
 
       it "returns that privilege set" do
-        Arrthorizer::Privilege.get(name).should be @privilege
+        fetched_privilege = Arrthorizer::Privilege.get(name)
+
+        expect(fetched_privilege).to be @privilege
       end
     end
 
@@ -28,7 +30,9 @@ describe Arrthorizer::Privilege do
       end
 
       specify "that privilege set is returned" do
-        Arrthorizer::Privilege.get(@privilege).should be @privilege
+        fetched_privilege = Arrthorizer::Privilege.get(@privilege)
+
+        expect(fetched_privilege).to be @privilege
       end
     end
   end

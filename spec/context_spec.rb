@@ -26,14 +26,14 @@ describe Arrthorizer do
       it "returns an Arrthorizer::Context" do
         result = Arrthorizer::Context(arg)
 
-        result.should be_an Arrthorizer::Context
+        expect(result).to be_an Arrthorizer::Context
       end
 
       describe "the returned Arrthorizer::Context" do
         let(:result) { Arrthorizer::Context(arg) }
 
         specify "it contains the same key-value pairs" do
-          result.send(key).should == value
+          expect(result.send(key)).to eql(value)
         end
       end
     end
@@ -42,7 +42,7 @@ describe Arrthorizer do
       let(:param) { Arrthorizer::Context.new }
 
       specify "that context is returned unmodified" do
-        Arrthorizer::Context(param).should be(param)
+        expect(Arrthorizer::Context(param)).to be(param)
       end
     end
   end

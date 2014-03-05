@@ -5,7 +5,7 @@ describe Arrthorizer::Group do
     it "registers the new instance with Role" do
       role = Arrthorizer::Group.new("some new group")
 
-      Arrthorizer::Role.get(role).should == role
+      expect(Arrthorizer::Role.get(role)).to eql role
     end
   end
 end

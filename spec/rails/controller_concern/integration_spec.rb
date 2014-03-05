@@ -8,11 +8,11 @@ describe Arrthorizer::Rails do
 
     describe "each controller class" do
       it "responds to :prepare_context" do
-        controller_class.should respond_to :to_prepare_context
+        expect(controller_class).to respond_to :to_prepare_context
       end
 
       it "responds to :arrthorizer_configuration" do
-        controller_class.should respond_to :arrthorizer_configuration
+        expect(controller_class).to respond_to :arrthorizer_configuration
       end
     end
 
@@ -22,7 +22,7 @@ describe Arrthorizer::Rails do
       it "has a protected method called :arrthorizer_context" do
         # this method is protected to prevent exposing it
         # via default or wildcard routes
-        controller.protected_methods.should include :arrthorizer_context
+        expect(controller.protected_methods).to include :arrthorizer_context
       end
 
       context "when it has a proper configuration for context building" do
@@ -45,7 +45,9 @@ describe Arrthorizer::Rails do
           end
 
           it "uses the 'default' config to build an Arrthorizer context" do
-            controller.send(:arrthorizer_context).should == Arrthorizer::Context(injected_params)
+            context = controller.send(:arrthorizer_context)
+
+            expect(context).to eql Arrthorizer::Context(injected_params)
           end
         end
 
@@ -68,7 +70,9 @@ describe Arrthorizer::Rails do
             context_hash = injected_params.merge(action_specific_config)
             expected_context = Arrthorizer::Context(context_hash)
 
-            controller.send(:arrthorizer_context).should == expected_context
+            context = controller.send(:arrthorizer_context)
+
+            expect(context).to eql expected_context
           end
         end
       end

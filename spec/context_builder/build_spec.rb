@@ -5,7 +5,7 @@ describe Arrthorizer::ContextBuilder do
 
   describe :build do
     it "returns an Arrthorizer::Context" do
-      builder.build.should be_an Arrthorizer::Context
+      expect(builder.build).to be_an Arrthorizer::Context
     end
   end
 end
