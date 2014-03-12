@@ -12,7 +12,7 @@ describe Arrthorizer::ArrthorizerException do
           begin
             raise Arrthorizer::ArrthorizerException
           rescue Exception => e
-            e.inner.should be inner_exception
+            expect(e.inner).to be inner_exception
           end
         end
       end

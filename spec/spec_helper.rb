@@ -18,4 +18,8 @@ end
 
 RSpec.configure do |config|
   config.use_transactional_fixtures = true
+
+  config.expect_with :rspec do |c|
+    c.syntax = :expect
+  end
 end

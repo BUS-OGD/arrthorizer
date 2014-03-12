@@ -9,13 +9,13 @@ describe Arrthorizer::Context do
 
     shared_examples_for "the return value of Arrthorizer::Context#merge" do
       it "returns an Arrthorizer::Context" do
-        result.should be_an Arrthorizer::Context
+        expect(result).to be_an Arrthorizer::Context
       end
 
       describe "the returned Arrthorizer::Context" do
         it "contains the merged contents" do
           merged_hash.each_pair do |key, value|
-            result.send(key).should == value
+            expect(result.send(key)).to eql value
           end
         end
       end

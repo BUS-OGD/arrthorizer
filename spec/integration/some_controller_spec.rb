@@ -28,7 +28,7 @@ describe SomeController do
           it "succeeds" do
             get :some_action
 
-            response.should be_success
+            expect(response).to be_success
           end
         end
 
@@ -40,7 +40,7 @@ describe SomeController do
           it "fails" do
             get :some_action
 
-            response.should be_forbidden
+            expect(response).to be_forbidden
           end
         end
 
@@ -57,7 +57,7 @@ describe SomeController do
           it "fails" do
             get :some_action
 
-            response.should be_forbidden
+            expect(response).to be_forbidden
           end
         end
       end
@@ -87,7 +87,7 @@ describe SomeController do
           it "succeeds" do
             get :some_action, some_param: allow_request
 
-            response.should be_success
+            expect(response).to be_success
           end
         end
 
@@ -97,7 +97,7 @@ describe SomeController do
           it "succeeds" do
             get :some_action, some_param: allow_request
 
-            response.should be_forbidden
+            expect(response).to be_forbidden
           end
         end
       end
@@ -114,7 +114,7 @@ describe SomeController do
           it "still fails" do
             get :some_action, some_param: allow_request
 
-            response.should be_forbidden
+            expect(response).to be_forbidden
           end
         end
       end

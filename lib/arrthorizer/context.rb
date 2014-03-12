@@ -49,6 +49,10 @@ module Arrthorizer
       marshal_dump
     end
 
+    def eql?(other)
+      self == other
+    end
+
     def ==(other)
       to_hash == other.to_hash
     end

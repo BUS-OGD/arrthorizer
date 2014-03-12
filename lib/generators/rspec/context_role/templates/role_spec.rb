@@ -25,7 +25,7 @@ describe <%= class_name %> do
       specify "no state is maintained in the role object" do
         role.applies_to_user?(user, current_context)
 
-        role.instance.instance_variables.should be_empty
+        expect(role.instance.instance_variables).to be_empty
       end
     end
 
@@ -46,7 +46,7 @@ describe <%= class_name %> do
       specify "no state is maintained in the role object" do
         role.applies_to_user?(user, current_context)
 
-        role.instance.instance_variables.should be_empty
+        expect(role.instance.instance_variables).to be_empty
       end
     end
   end
