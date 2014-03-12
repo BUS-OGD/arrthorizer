@@ -13,10 +13,19 @@ module Arrthorizer
 
       def activate_filter
         insert_into_file 'app/controllers/application_controller.rb', filter_code, after: /class ApplicationController.*$/
+        insert_into_file 'app/controllers/application_controller.rb', scope_code, after: /class ApplicationController.*$/
         insert_into_file 'app/controllers/application_controller.rb', context_preparation_code, before: /end$\s*\z/
       end
 
     protected
+      def scope_code
+        <<-SCOPE_CODE
+  # Tell Arrthorizer how to find the user who needs to be authorized to execute
+  # a given controller action
+  authorization_scope :current_user
+        SCOPE_CODE
+      end
+
       def filter_code
         <<-FILTER_CODE
 

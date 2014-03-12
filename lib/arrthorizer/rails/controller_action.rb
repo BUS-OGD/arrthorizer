@@ -3,6 +3,7 @@ module Arrthorizer
     class ControllerAction
       ControllerNotDefined = Class.new(Arrthorizer::ArrthorizerException)
       ActionNotDefined = Class.new(Arrthorizer::ArrthorizerException)
+      ActionNotConfigured = Class.new(Arrthorizer::ArrthorizerException)
 
       attr_accessor :privilege
       attr_reader :controller_path, :action_name
@@ -31,6 +32,8 @@ module Arrthorizer
 
       def self.fetch(key)
         registry.fetch(key)
+      rescue Arrthorizer::Registry::NotFound
+        raise ActionNotConfigured, "No privileges granted for #{key}"
       end
 
       def self.register(controller_action)

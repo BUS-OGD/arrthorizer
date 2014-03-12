@@ -6,6 +6,11 @@ module Arrthorizer
       included do
       protected
         class_attribute :arrthorizer_configuration, instance_writer: false
+        class_attribute :arrthorizer_scope, instance_writer: false
+
+        def arrthorizer_scope
+          send(self.class.arrthorizer_scope || :current_user)
+        end
 
         ##
         # This is a hook method that provides access to the context for a
@@ -23,9 +28,16 @@ module Arrthorizer
         def authorize
           action = Arrthorizer::Rails::ControllerAction.get_current(self)
           roles = action.privilege.permitted_roles
+          scope = arrthorizer_scope
 
           roles.any? do |role|
-            role.applies_to_user?(current_user, arrthorizer_context)
+            begin
+              role.applies_to_user?(scope, arrthorizer_context)
+            rescue StandardError
+              ::Rails.logger.warn("Error occurred while evaluating #{role} for #{current_user}.\nCurrent context: #{arrthorizer_context.inspect}")
+
+              false
+            end
           end || forbidden
         end
 
@@ -39,6 +51,15 @@ module Arrthorizer
       end
 
       module ClassMethods
+        ##
+        # This method tells Arrthorizer the name of the method that it is supposed
+        # to use to find the user who is currently attempting to use a certain
+        # controller action. This user is subsequently passed into all role
+        # verifications.
+        def authorization_scope(scope)
+          self.arrthorizer_scope = scope
+        end
+
         ##
         # This method sets up Arrthorizer to verify that a user has the proper
         # rights to access a # given controller action. Options can be provided

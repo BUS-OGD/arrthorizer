@@ -1,0 +1,14 @@
+Description:
+    Generate a template for a new Arrthorizer::ContextRole
+
+Example:
+    rails generate context_role forum/post_author
+
+    This will create:
+        app/roles/forum/post_author.rb
+
+    and a unit test file for the new role, depending
+    on your framework:
+        rspec: spec/roles/forum/post_author_spec.rb
+        test_unit: test/roles/forum/post_author_test.rb
+        mini_test: test/roles/forum/post_author_test.rb

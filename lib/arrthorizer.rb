@@ -44,4 +44,8 @@ module Arrthorizer
   def self.membership_service
     @membership_service
   end
+
+  if defined?(RSpec)
+    require 'arrthorizer/rspec'
+  end
 end
