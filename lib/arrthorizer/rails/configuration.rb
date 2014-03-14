@@ -1,3 +1,5 @@
+require 'yaml'
+
 module Arrthorizer
   module Rails
     class Configuration
