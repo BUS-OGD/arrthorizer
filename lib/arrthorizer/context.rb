@@ -41,6 +41,18 @@ module Arrthorizer
   class Context < OpenStruct
     ConversionError = Class.new(Arrthorizer::ArrthorizerException)
 
+    def self.build(attrs = {})
+      if attrs.is_a? Context
+        attrs
+      else
+        new(attrs)
+      end
+    end
+
+    def initialize(attrs = {})
+      super(attrs.to_hash || attrs.marshal_dump)
+    end
+
     def merge(hash)
       self.class.new(to_hash.merge(hash))
     end
@@ -60,9 +72,7 @@ module Arrthorizer
 
 module_function
   def Context(contents)
-    return contents if contents.is_a? Context
-
-    return Context.new(contents.to_hash)
+    Context.build(contents)
   rescue NoMethodError
     raise Arrthorizer::Context::ConversionError, "Can't convert #{contents} to an Arrthorizer::Context"
   end

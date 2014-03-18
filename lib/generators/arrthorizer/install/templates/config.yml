@@ -40,7 +40,6 @@
 #       - destroy
 #   roles:
 #     - Forum::TopicStarter
-#     - Forum::Administrators
 #
 # update_forum_topic:
 #   actions:
@@ -49,4 +48,3 @@
 #       - update
 #   roles:
 #     - Forum::TopicStarter
-#     - Forum::Administrators
