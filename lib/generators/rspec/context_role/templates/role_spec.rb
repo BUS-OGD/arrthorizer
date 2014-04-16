@@ -22,11 +22,10 @@ describe <%= class_name %> do
 
       # This is an extremely important test - it safeguards against
       # persisting data between requests.
-      specify "no state is maintained in the role object" do
-        role.applies_to_user?(user, Arrthorizer::Context(current_context))
-
-        expect(role.instance.instance_variables).to be_empty
-      end
+      # if you want to rename the 'role' or 'current_context' variables,
+      # you can call this shared example with different options like so:
+      # it_behaves_like "not persisting state in the role object", role: some_role, current_context: some_context
+      it_behaves_like "not persisting state in the role object"
     end
 
     context "when some_other_condition" do
@@ -43,11 +42,10 @@ describe <%= class_name %> do
 
       # This is an extremely important test - it safeguards against
       # persisting data between requests.
-      specify "no state is maintained in the role object" do
-        role.applies_to_user?(user, Arrthorizer::Context(current_context))
-
-        expect(role.instance.instance_variables).to be_empty
-      end
+      # if you want to rename the 'role' or 'current_context' variables,
+      # you can call this shared example with different options like so:
+      # it_behaves_like "not persisting state in the role object", role: some_role, current_context: some_context
+      it_behaves_like "not persisting state in the role object"
     end
   end
 end
