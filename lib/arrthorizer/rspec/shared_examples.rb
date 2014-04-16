@@ -1,4 +1,4 @@
-Arrthorizer::RSpec::SharedExamples do
+module Arrthorizer::RSpec::SharedExamples
   shared_examples "not persisting state in the role object" do |options = {}|
     specify "no state is maintained in the role object" do
       the_role = options[:role] || role
