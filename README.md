@@ -11,6 +11,15 @@ Arrthorizer is flexible and allows you to inject much of your own application lo
 
 Arrthorizer is [designed for ease of use and configurability](https://github.com/BUS-OGD/arrthorizer/wiki/Desired-and-required-features). Its Rails version (currently the *only* version) comes bundled with some useful generators and most of the configuration is done using a DSL in your controllers, along with a plain old YAML file.
 
+
+## Features
+
+* Works with Rails 3.2, 4.0 and 4.1
+* Leverages domain logic for authorization without introducing strong coupling
+* Easy-to-use generators get you up-and-running in minutes, not hours
+* Well-tested
+* Generates tests for your roles for your test framework (MiniTest, RSpec and Test::Unit supported)
+
 ## Installation
 
 Add this line to your application's Gemfile:
