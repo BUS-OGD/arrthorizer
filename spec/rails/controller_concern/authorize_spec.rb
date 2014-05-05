@@ -51,6 +51,22 @@ describe Arrthorizer::Rails::ControllerConcern do
           permitted_roles.add(role)
         end
 
+        context "but building the context results in an error" do
+          let(:error) { Class.new(StandardError).new }
+
+          before :each do
+            controller.stub(:arrthorizer_context).and_raise(error)
+            # for testing purposes. We're testing a filter here, so no request exists, causing #status= to fail
+            controller.stub(:forbidden)
+          end
+
+          specify "that error not suppressed" do
+            expect {
+              controller.send(:authorize)
+            }.to raise_error(error)
+          end
+        end
+
         context "and the role applies to the user" do
           before do
             role.stub(:applies_to_user?).with(current_user, context).and_return(true)

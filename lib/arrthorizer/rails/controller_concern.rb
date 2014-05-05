@@ -18,31 +18,37 @@ module Arrthorizer
         # built and provided to all ContextRoles that are configured as having
         # access to the given controller action.
         def arrthorizer_context
-          arrthorizer_context_builder.build_for_action
+          @arrthorizer_context ||= arrthorizer_context_builder.build_for_action
         end
 
         def arrthorizer_defaults
           arrthorizer_context_builder.build_default
         end
 
-        def authorize
-          action = Arrthorizer::Rails::ControllerAction.get_current(self)
-          roles = action.privilege.permitted_roles
-          scope = arrthorizer_scope
+        def arrthorizer_check_role(role, context)
+          begin
+            role.applies_to_user?(arrthorizer_scope, context)
+          rescue StandardError
+            ::Rails.logger.warn("Error occurred while evaluating #{role} for #{current_user}.")
+            return false
+          end
+        end
 
+        def arrthorizer_find_applicable_role(roles)
           roles.any? do |role|
-            begin
-              role.applies_to_user?(scope, arrthorizer_context)
-            rescue StandardError
-              ::Rails.logger.warn("Error occurred while evaluating #{role} for #{current_user}.\nCurrent context: #{arrthorizer_context.inspect}")
-
-              false
-            end
-          end || forbidden
+            arrthorizer_check_role(role, arrthorizer_context)
+          end
         end
 
         def forbidden
           render text: 'Access Denied', status: :forbidden
+        end
+
+        def authorize
+          action = Arrthorizer::Rails::ControllerAction.get_current(self)
+          roles = action.privilege.permitted_roles
+
+          arrthorizer_find_applicable_role(roles) || forbidden
         end
 
         def arrthorizer_context_builder
