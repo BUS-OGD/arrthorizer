@@ -22,7 +22,7 @@ module Arrthorizer
         end
 
         def arrthorizer_defaults
-          arrthorizer_context_builder.build_default
+          @arrthorizer_defaults ||= arrthorizer_context_builder.build_default
         end
 
         def arrthorizer_check_role(role, context)
