@@ -16,7 +16,7 @@ describe Arrthorizer::Privilege do
 
       expect {
         privilege.make_accessible_to(role)
-      }.not_to change { privilege.accessible_to?(unrelated_role) }.to(true)
+      }.not_to change { privilege.accessible_to?(unrelated_role) }
     end
   end
 end

@@ -30,9 +30,9 @@ describe Arrthorizer::Rails do
         let(:current_action) { 'some_action' }
 
         before :each do
-          controller.stub(:params).and_return injected_params
+          allow(controller).to receive(:params).and_return injected_params
 
-          controller.stub(:action_name).and_return(current_action)
+          allow(controller).to receive(:action_name).and_return(current_action)
         end
 
         context "and there is no specific configuration for the current action" do
