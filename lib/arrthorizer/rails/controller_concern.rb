@@ -34,7 +34,10 @@ module Arrthorizer
           end
         end
 
-        def arrthorizer_find_applicable_role(roles)
+        def arrthorizer_has_applicable_roles?
+          action = Arrthorizer::Rails::ControllerAction.get_current(self)
+          roles = action.privilege.permitted_roles
+
           roles.any? do |role|
             arrthorizer_check_role(role, arrthorizer_context)
           end
@@ -45,10 +48,7 @@ module Arrthorizer
         end
 
         def authorize
-          action = Arrthorizer::Rails::ControllerAction.get_current(self)
-          roles = action.privilege.permitted_roles
-
-          arrthorizer_find_applicable_role(roles) || forbidden
+          arrthorizer_has_applicable_roles? || forbidden
         end
 
         def arrthorizer_context_builder
