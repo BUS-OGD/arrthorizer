@@ -20,7 +20,7 @@ describe Arrthorizer do
 
     context "when an object responding to #to_hash is provided" do
       before :each do
-        arg.stub(:to_hash).and_return({ key => value })
+        allow(arg).to receive(:to_hash).and_return({ key => value })
       end
 
       it "returns an Arrthorizer::Context" do

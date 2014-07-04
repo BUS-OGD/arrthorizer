@@ -20,5 +20,5 @@ Gem::Specification.new do |gem|
   gem.add_dependency             'rails', '>= 3.2.18'
   gem.add_development_dependency 'combustion', '~> 0.5.1'
   gem.add_development_dependency 'sqlite3'
-  gem.add_development_dependency 'rspec-rails'
+  gem.add_development_dependency 'rspec-rails', '>= 3'
 end

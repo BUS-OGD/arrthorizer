@@ -7,9 +7,9 @@ module Arrthorizer
   end
 
   role_spec = {
-      type: :role,
-      example_group: { file_path: %r(spec/roles) }
-    }
+    type: :role,
+    file_path: %r(spec/roles)
+  }
 
   ::RSpec.configure do |config|
     config.include Arrthorizer::RSpec::Matchers::Roles, role_spec

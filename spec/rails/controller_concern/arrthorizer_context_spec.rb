@@ -11,7 +11,7 @@ describe Arrthorizer::Rails::ControllerConcern do
       end
     end
 
-    controller.stub(:request).and_return(ActionDispatch::TestRequest.new)
+    allow(controller).to receive(:request).and_return(ActionDispatch::TestRequest.new)
   end
 
   describe :arrthorizer_context do

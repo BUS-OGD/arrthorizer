@@ -5,7 +5,7 @@ describe Arrthorizer::Rails::ControllerAction do
     let(:controller) { double('controller') }
 
     before :each do
-      Arrthorizer::Rails::ControllerAction.stub(:key_for).with(controller).and_return("controller#action")
+      allow(Arrthorizer::Rails::ControllerAction).to receive(:key_for).with(controller).and_return("controller#action")
     end
 
     context "when there is no configuration for the current action" do

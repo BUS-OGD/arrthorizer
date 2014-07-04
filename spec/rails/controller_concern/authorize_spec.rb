@@ -11,10 +11,10 @@ describe Arrthorizer::Rails::ControllerConcern do
   let(:context){ double("context") }
 
   before do
-    controller.stub(:action_name).and_return(action_name)
-    controller.stub(:current_user).and_return(current_user)
-    controller.stub(:arrthorizer_context).and_return(context)
-    controller.stub(:controller_path).and_return(controller_path)
+    allow(controller).to receive(:action_name).and_return(action_name)
+    allow(controller).to receive(:current_user).and_return(current_user)
+    allow(controller).to receive(:arrthorizer_context).and_return(context)
+    allow(controller).to receive(:controller_path).and_return(controller_path)
   end
 
   describe :authorize do
@@ -31,8 +31,8 @@ describe Arrthorizer::Rails::ControllerConcern do
       let(:permitted_roles){ Arrthorizer::Registry.new }
 
       before do
-        controller_action.stub(:privilege).and_return(privilege)
-        privilege.stub(:permitted_roles).and_return(permitted_roles)
+        allow(controller_action).to receive(:privilege).and_return(privilege)
+        allow(privilege).to receive(:permitted_roles).and_return(permitted_roles)
       end
 
       context "but the privilege has no permitted roles" do
@@ -47,7 +47,7 @@ describe Arrthorizer::Rails::ControllerConcern do
         let(:role){ Arrthorizer::Role.new }
 
         before do
-          role.stub(:name).and_return('some_role')
+          allow(role).to receive(:name).and_return('some_role')
           permitted_roles.add(role)
         end
 
@@ -55,9 +55,9 @@ describe Arrthorizer::Rails::ControllerConcern do
           let(:error) { Class.new(StandardError).new }
 
           before :each do
-            controller.stub(:arrthorizer_context).and_raise(error)
+            allow(controller).to receive(:arrthorizer_context).and_raise(error)
             # for testing purposes. We're testing a filter here, so no request exists, causing #status= to fail
-            controller.stub(:forbidden)
+            allow(controller).to receive(:forbidden)
           end
 
           specify "that error not suppressed" do
@@ -69,7 +69,7 @@ describe Arrthorizer::Rails::ControllerConcern do
 
         context "and the role applies to the user" do
           before do
-            role.stub(:applies_to_user?).with(current_user, context).and_return(true)
+            allow(role).to receive(:applies_to_user?).with(current_user, context).and_return(true)
           end
 
           it "is not forbidden" do
@@ -81,7 +81,7 @@ describe Arrthorizer::Rails::ControllerConcern do
 
         context "and the role does not apply to the user" do
           before do
-            role.stub(:applies_to_user?).with(current_user, context).and_return(false)
+            allow(role).to receive(:applies_to_user?).with(current_user, context).and_return(false)
           end
 
           it "is forbidden" do
@@ -94,13 +94,13 @@ describe Arrthorizer::Rails::ControllerConcern do
             let(:another_role){ Arrthorizer::Role.new }
 
             before do
-              another_role.stub(:name).and_return('another_role')
+              allow(another_role).to receive(:name).and_return('another_role')
               permitted_roles.add(another_role)
             end
 
             context "and the role applies to the user" do
               before do
-                another_role.stub(:applies_to_user?).with(current_user, context).and_return(true)
+                allow(another_role).to receive(:applies_to_user?).with(current_user, context).and_return(true)
               end
 
               it "is not forbidden" do
@@ -112,7 +112,7 @@ describe Arrthorizer::Rails::ControllerConcern do
 
             context "and the role does not apply to the user" do
               before do
-                another_role.stub(:applies_to_user?).with(current_user, context).and_return(false)
+                allow(another_role).to receive(:applies_to_user?).with(current_user, context).and_return(false)
               end
 
               it "is forbidden" do
@@ -126,12 +126,12 @@ describe Arrthorizer::Rails::ControllerConcern do
 
         context "but evaluating the role raises any kind of StandardError" do
           before do
-            role.stub(:applies_to_user?).with(current_user, context).and_raise("Some exception")
+            allow(role).to receive(:applies_to_user?).with(current_user, context).and_raise("Some exception")
           end
 
           specify "a warning is logged" do
             # for testing purposes. We're testing a filter here, so no request exists, causing #status= to fail
-            controller.stub(:forbidden)
+            allow(controller).to receive(:forbidden)
 
             expect(::Rails.logger).to receive(:warn).with(an_instance_of(String))
 
@@ -142,7 +142,7 @@ describe Arrthorizer::Rails::ControllerConcern do
             let(:another_role){ Arrthorizer::Group.new("some other role") }
 
             before :each do
-              another_role.stub(:applies_to_user?).and_return(true)
+              allow(another_role).to receive(:applies_to_user?).and_return(true)
               permitted_roles.add(another_role)
             end
 

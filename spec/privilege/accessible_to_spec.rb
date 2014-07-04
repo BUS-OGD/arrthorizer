@@ -16,7 +16,7 @@ describe Arrthorizer::Privilege do
         let(:arg) { role }
 
         it "returns true" do
-          expect(privilege.accessible_to?(arg)).to be_true
+          expect(privilege.accessible_to?(arg)).to be true
         end
       end
 
@@ -24,7 +24,7 @@ describe Arrthorizer::Privilege do
         let(:arg) { role.name }
 
         it "returns true" do
-          expect(privilege.accessible_to?(arg)).to be_true
+          expect(privilege.accessible_to?(arg)).to be true
         end
       end
     end

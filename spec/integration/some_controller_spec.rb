@@ -4,12 +4,12 @@ describe SomeController do
   let(:action) { Arrthorizer::Rails::ControllerAction.fetch("some#some_action") }
   let(:other_action) { Arrthorizer::Rails::ControllerAction.fetch("some#other_action") }
 
-  describe :some_action, type: :controller do
+  describe 'some_action', type: :controller do
     let!(:privilege) { action.privilege }
     let!(:current_user) { double("user") }
 
     before do
-      controller.stub(:current_user) { current_user }
+      allow(controller).to receive(:current_user) { current_user }
     end
 
     describe "group roles" do
@@ -124,7 +124,7 @@ describe SomeController do
   private
   def configure_context_role(&block)
     UnnamespacedContextRole.instance.tap do |role|
-      role.stub(:applies_to_user?, &block)
+      allow(role).to receive(:applies_to_user?, &block)
     end
   end
 
@@ -141,6 +141,6 @@ describe SomeController do
   end
 
   def stub_membership_with(user, group, &block)
-    Arrthorizer.membership_service.stub(:is_member_of?).with(user, group, &block)
+    allow(Arrthorizer.membership_service).to receive(:is_member_of?).with(user, group, &block)
   end
 end
