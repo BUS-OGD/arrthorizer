@@ -1,11 +1,9 @@
 require 'rubygems'
 require 'bundler/setup'
 
-require 'combustion'
+ENV["RAILS_ENV"] = "test"
 
-Combustion.initialize! :active_record, :action_controller,
-                       :action_view
-
+require File.expand_path("../dummy/config/environment.rb",  __FILE__)
 require 'rspec/rails'
 
 Dir.glob('./spec/support/**/*.rb') do |file|
