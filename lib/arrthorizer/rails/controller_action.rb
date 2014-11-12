@@ -26,8 +26,8 @@ module Arrthorizer
     private
       attr_writer :controller_path, :action_name
 
-      def self.key_for(controller)
-        "#{controller.controller_path}##{controller.action_name}"
+      def self.key_for(current)
+        "#{current.controller_path}##{current.action_name}"
       end
 
       def self.fetch(key)
