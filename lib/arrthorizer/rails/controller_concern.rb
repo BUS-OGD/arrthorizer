@@ -28,8 +28,10 @@ module Arrthorizer
         def arrthorizer_check_role(role, context)
           begin
             role.applies_to_user?(arrthorizer_scope, context)
-          rescue StandardError
-            ::Rails.logger.warn("Error occurred while evaluating #{role} for #{current_user}.")
+          rescue StandardError => error
+            ::Rails.logger.warn("A(n) #{error.class.name} occurred while evaluating #{role} for #{current_user}.")
+            ::Rails.logger.debug(error.message)
+            ::Rails.logger.debug(error.backtrace.join("\n"))
             return false
           end
         end
