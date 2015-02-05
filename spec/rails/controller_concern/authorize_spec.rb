@@ -1,4 +1,4 @@
-require 'rails_helper'
+require 'spec_helper'
 
 describe Arrthorizer::Rails::ControllerConcern do
   let(:controller_class) { Class.new(SomeController) }

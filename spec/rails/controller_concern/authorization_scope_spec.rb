@@ -1,4 +1,4 @@
-require 'rails_helper'
+require 'spec_helper'
 
 describe Arrthorizer::Rails::ControllerConcern do
   describe :authorization_scope do
