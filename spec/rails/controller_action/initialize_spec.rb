@@ -1,4 +1,4 @@
-require "spec_helper"
+require "rails_helper"
 
 describe Arrthorizer::Rails::ControllerAction do
   let(:controller_name) { 'some_controller' }

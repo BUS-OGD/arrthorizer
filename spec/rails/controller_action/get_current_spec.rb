@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Arrthorizer::Rails::ControllerAction do
   describe :get_current do

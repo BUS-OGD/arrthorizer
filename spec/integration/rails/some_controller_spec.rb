@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe SomeController do
   let(:action) { Arrthorizer::Rails::ControllerAction.fetch("some#some_action") }
