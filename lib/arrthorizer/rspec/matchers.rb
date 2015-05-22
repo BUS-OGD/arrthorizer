@@ -19,7 +19,7 @@ module Arrthorizer
             "Expected role #{@role.name} to apply in context #{context.inspect}\nfor user #{user.inspect}, but it does not apply!"
           end
 
-          def negative_failure_message
+          def failure_message_when_negates
             "Expected role #{@role.name} not to apply in context #{context.inspect}\nfor user #{user.inspect}, but it applies!"
           end
 
