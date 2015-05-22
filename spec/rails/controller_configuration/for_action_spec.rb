@@ -1,4 +1,4 @@
-require "rails_helper"
+require "spec_helper"
 
 describe Arrthorizer::Rails::ControllerConfiguration do
   let(:config) { Arrthorizer::Rails::ControllerConfiguration.new do end }
