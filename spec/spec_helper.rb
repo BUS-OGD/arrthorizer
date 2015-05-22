@@ -1,6 +1,7 @@
 require 'rubygems'
 require 'bundler/setup'
 
+require 'rails/all'
 require 'arrthorizer'
 
 ENV["RAILS_ENV"] = "test"
