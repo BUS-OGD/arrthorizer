@@ -97,5 +97,5 @@ DEPENDENCIES
   arrthorizer!
   rails (~> 4.1.0.beta1)
   rake
-  rspec-rails (~> 3.1.0)
+  rspec-rails (>= 3.0.0)
   sqlite3
